@@ -1,0 +1,3 @@
+C:/Harsh/micrograd-in-C/build/CMakeFiles/engine.dir
+C:/Harsh/micrograd-in-C/build/CMakeFiles/edit_cache.dir
+C:/Harsh/micrograd-in-C/build/CMakeFiles/rebuild_cache.dir

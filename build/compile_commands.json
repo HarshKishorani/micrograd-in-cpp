@@ -1,0 +1,14 @@
+[
+{
+  "directory": "C:/Harsh/micrograd-in-C/build",
+  "command": "C:\\mingw64\\bin\\g++.exe  @CMakeFiles/engine.dir/includes_CXX.rsp -g -std=gnu++20 -o CMakeFiles\\engine.dir\\src\\main.cpp.obj -c C:\\Harsh\\micrograd-in-C\\src\\main.cpp",
+  "file": "C:/Harsh/micrograd-in-C/src/main.cpp",
+  "output": "CMakeFiles/engine.dir/src/main.cpp.obj"
+},
+{
+  "directory": "C:/Harsh/micrograd-in-C/build",
+  "command": "C:\\mingw64\\bin\\g++.exe  @CMakeFiles/engine.dir/includes_CXX.rsp -g -std=gnu++20 -o CMakeFiles\\engine.dir\\src\\value.cpp.obj -c C:\\Harsh\\micrograd-in-C\\src\\value.cpp",
+  "file": "C:/Harsh/micrograd-in-C/src/value.cpp",
+  "output": "CMakeFiles/engine.dir/src/value.cpp.obj"
+}
+]
