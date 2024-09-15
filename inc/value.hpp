@@ -21,24 +21,25 @@ public:
     Value(double data, std::unordered_set<Value *> children = {}, char op = ' ');
 
     // Overload operators for scalar operations
-    Value operator+(Value &other); // addition
-    Value operator-(Value &other); // subtraction
-    Value operator-();             // unary minus
-    Value operator*(Value &other); // multiplication
-    Value operator/(Value &other); // division
+    Value operator+(Value other); // addition
+    Value operator-(Value other); // subtraction
+    Value operator-();            // unary minus
+    Value operator*(Value other); // multiplication
+    Value operator/(Value other); // division
     Value relu();
 
-    // TODO : Power overloading
+    Value operator^(double other);
+    Value operator^(Value other);
 
-    friend Value operator+(double lhs, Value &rhs); // reverse addition
-    friend Value operator-(double lhs, Value &rhs); // reverse subtraction
-    friend Value operator*(double lhs, Value &rhs); // reverse multiplication
-    friend Value operator/(double lhs, Value &rhs); // reverse division
+    friend Value operator+(Value lhs, double rhs);
+    friend Value operator*(Value lhs, double rhs);
+    friend Value operator-(Value lhs, double rhs);
+    friend Value operator/(Value lhs, double rhs);
 
-    friend Value operator+(Value &lhs,double rhs); // direct addition
-    friend Value operator-(Value &lhs,double rhs); // direct subtraction
-    friend Value operator*(Value &lhs,double rhs); // direct multiplication
-    friend Value operator/(Value &lhs,double rhs); // direct division
+    friend Value operator+(double lhs, Value rhs);
+    friend Value operator*(double lhs, Value rhs);
+    friend Value operator-(double lhs, Value rhs);
+    friend Value operator/(double lhs, Value rhs);
 
     friend std::ostream &operator<<(std::ostream &os, Value const &value); // << operator
 

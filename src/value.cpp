@@ -15,7 +15,8 @@ Value::Value(double data, std::unordered_set<Value *> children, char op)
     this->_op = op;            // Operation that created this Value
 }
 
-Value Value::operator+(Value &other)
+// Addition operator
+Value Value::operator+(Value other)
 {
     Value out(this->data + other.data, {this, const_cast<Value *>(&other)}, '+');
 
@@ -28,7 +29,8 @@ Value Value::operator+(Value &other)
     return out;
 }
 
-Value Value::operator-(Value &other)
+// Subtraction operator
+Value Value::operator-(Value other)
 {
     Value out(this->data - other.data, {this, const_cast<Value *>(&other)}, '-');
 
@@ -41,42 +43,59 @@ Value Value::operator-(Value &other)
     return out;
 }
 
+// Unary Minus operator
 Value Value::operator-()
 {
     return (*this) * -1;
 }
 
-Value Value::operator*(Value &other)
+// Multiplication operator
+Value Value::operator*(Value other)
 {
     Value out(this->data * other.data, {this, const_cast<Value *>(&other)}, '*');
 
     out._backward = [this, &other, &out]()
     {
-        this->grad += (other.data + out.grad);
-        other.grad += (this->data + out.grad);
+        this->grad += other.data * out.grad;
+        other.grad += this->data * out.grad;
     };
 
     return out;
 }
 
-Value Value::operator/(Value &other)
+// Power operator
+Value Value::operator^(double other)
 {
-    return (1 / other) * (*this);
+    Value out(std::pow(this->data, other), {this}, '^');
+
+    out._backward = [this, &other, &out]()
+    {
+        this->grad += (other * std::pow(this->data, (other - 1))) * out.grad;
+    };
+
+    return out;
 }
 
+// Division operator
+Value Value::operator/(Value other)
+{
+    return (*this) * (other ^ -1);
+}
+
+// ReLU activation function
 Value Value::relu()
 {
     Value out(this->data < 0 ? 0 : this->data, {this}, 'r'); // 'r' stands for ReLU
 
     out._backward = [this, &out]()
     {
-        // ReLU gradient: gradient is 1 if out.data > 0, otherwise 0
-        this->grad += ((out.data > 0 ? 1 : 0) * out.grad);
+        this->grad += (out.data > 0 ? 1 : 0) * out.grad;
     };
 
     return out;
 }
 
+// Backward pass
 void Value::backward()
 {
     // Topological order of all the children in the computation graph
@@ -110,41 +129,40 @@ void Value::backward()
     }
 }
 
-Value operator+(double lhs, Value &rhs)
+// LHS - Value; RHS-double 
+
+Value operator+(Value lhs, double rhs)
+{
+    return lhs + Value(rhs);
+}
+Value operator-(Value lhs, double rhs)
+{
+    return lhs - Value(rhs);
+}
+Value operator*(Value lhs, double rhs)
+{
+    return lhs * Value(rhs);
+}
+Value operator/(Value lhs, double rhs)
+{
+    return lhs / Value(rhs);
+}
+
+// LHS - double; RHS-Value
+
+Value operator+(double lhs, Value rhs)
 {
     return Value(lhs) + rhs;
 }
-
-Value operator-(double lhs, Value &rhs)
+Value operator-(double lhs, Value rhs)
 {
     return Value(lhs) - rhs;
 }
-
-Value operator*(double lhs, Value &rhs)
+Value operator*(double lhs, Value rhs)
 {
     return Value(lhs) * rhs;
 }
-
-Value operator/(double lhs, Value &rhs)
+Value operator/(double lhs, Value rhs)
 {
     return Value(lhs) / rhs;
-}
-
-Value operator+(Value &lhs, double rhs)
-{
-    return rhs + lhs;
-}
-Value operator-(Value &lhs, double rhs)
-{
-    return rhs - lhs;
-}
-
-Value operator*(Value &lhs, double rhs)
-{
-    return rhs * lhs;
-}
-
-Value operator/(Value &lhs, double rhs)
-{
-    return lhs / rhs;
 }

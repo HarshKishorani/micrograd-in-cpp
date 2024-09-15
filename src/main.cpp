@@ -5,22 +5,22 @@ int main()
 {
     Value value = Value(2, {});
     Value value2 = Value(3, {});
-    Value value3 = value * value2;
+    Value value3 = value2 * value2;
 
-    std::cout << value3;
-    for (Value *v : value3._prev)
-    {
-        std::cout << *v;
-    }
+    std::cout << 4 + value3;
+    // for (Value *v : value3._prev)
+    // {
+    //     std::cout << *v;
+    // }
 
-    value3.backward();
+    // value3.backward();
 
-    std::cout << "\n"
-              << value3;
-    for (Value *v : value3._prev)
-    {
-        std::cout << *v;
-    }
+    // std::cout << "\n"
+    //           << value3;
+    // for (Value *v : value3._prev)
+    // {
+    //     std::cout << *v;
+    // }
 
     return 0;
 }
