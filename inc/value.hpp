@@ -16,6 +16,8 @@ public:
     std::unordered_set<Value *> _prev; // Set of previous Value pointers (for autograd graph construction)
     char _op;                          // Operation that created this value ('+', '*', etc.)
 
+    Value();
+
     // Constructor: initializes data, _prev (children), and _op
     // we can use 'explicit' on constructor to avoid implicit type conversion.
     Value(double data, std::unordered_set<Value *> children = {}, char op = ' ');

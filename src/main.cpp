@@ -1,26 +1,28 @@
 #include <iostream>
-#include "value.hpp"
+#include "MLP.hpp"
 
 int main()
 {
-    Value value = Value(2, {});
-    Value value2 = Value(3, {});
-    Value value3 = value2 * value2;
+    // Define a 3-layer MLP: 3 inputs, then layers with 4, 4, and 1 neurons
+    std::vector<int> nouts = {4, 4, 1};
+    MLP mlp(3, nouts);
 
-    std::cout << 4 + value3;
-    // for (Value *v : value3._prev)
-    // {
-    //     std::cout << *v;
-    // }
+    // Example input
+    std::vector<Value> input = {Value(0.5), Value(0.3), Value(0.2)};
 
-    // value3.backward();
+    // Forward pass
+    std::vector<Value> output = mlp(input);
 
-    // std::cout << "\n"
-    //           << value3;
-    // for (Value *v : value3._prev)
-    // {
-    //     std::cout << *v;
-    // }
+    // Print the output
+    std::cout << "MLP output: ";
+    for (Value &v : output)
+    {
+        std::cout << v << " ";
+    }
+    std::cout << std::endl;
+
+    // Print the MLP structure
+    std::cout << mlp << std::endl;
 
     return 0;
 }

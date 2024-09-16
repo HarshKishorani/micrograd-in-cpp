@@ -5,6 +5,10 @@ std::ostream &operator<<(std::ostream &os, Value const &value)
     return os << std::format("Value(data={:.4f}, grad={:.4f})\n", value.data, value.grad);
 }
 
+Value::Value()
+{
+}
+
 // Constructor: initializes the data, children (for autograd), and the operation (op)
 Value::Value(double data, std::unordered_set<Value *> children, char op)
 {
@@ -129,7 +133,7 @@ void Value::backward()
     }
 }
 
-// LHS - Value; RHS-double 
+// LHS - Value; RHS-double
 
 Value operator+(Value lhs, double rhs)
 {
